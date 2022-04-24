@@ -1,5 +1,6 @@
 local M = {}
 local CURRENT_BUFFER = 0 -- current buffer
+local DB = require("query-stash.db")
 
 local function setup(parameters)
     PATH_TO_EXECUTABLE = parameters["path_to_executable"]
@@ -41,6 +42,14 @@ local function call_query_stash(query, connection_name)
     return wrap_results_in_multiline_comments(results)
 end
 
+local function lines(initial_str)
+    local result = {}
+    for line in initial_str:gmatch "[^\n]+" do
+        table.insert(result, line)
+    end
+    return result
+end
+
 local function write_query_results_to_buffer(results, line_index_start)
     vim.api.nvim_buf_set_lines(
         CURRENT_BUFFER, line_index_start, line_index_start, false, results
@@ -56,8 +65,11 @@ end
 
 local function test_harness()
     local query = "select * from dbt_collin.raw_customers limit 1"
-    put(query)
-    call_query_stash(query)
+    local sqlite_query = "SELECT * FROM queries LIMIT 10;"
+    results = DB.get_results_from_query(sqlite_query)
+    for k, v in pairs(results) do
+        write_query_results_to_buffer(lines(v.query_text), 99)
+    end
 end
 
 M.test_harness = test_harness
