@@ -7,10 +7,11 @@
 - [X] make `setup` function
 - [X] make keymap example
 - [X] update "send to query-stash" functions to take optional connection-name arg
-- [ ] update setup functions to take optional config-path arg
+- [ ] update setup functions to take optional config-dir-path arg
 - [ ] write function to send current paragraph to query-stash
 - [ ] add vim help file
 - [ ] add explanation with links to query-stash in README.md
+- [ ] make initial telescope integration
 
 
 Example configuration:
