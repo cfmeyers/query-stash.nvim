@@ -22,7 +22,7 @@ local function get_current_visual_selection_as_string()
 end
 
 local function wrap_results_in_multiline_comments(results)
-    table.insert(results, 1, "/*")
+    table.insert(results, 1, "/* ¿" .. os.date("%Y-%m-%d %H:%M:%S") .. "?")
     table.insert(results, 1, "")
     table.insert(results, "*/")
     table.insert(results, "")
