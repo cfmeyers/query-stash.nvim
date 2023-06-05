@@ -1,9 +1,12 @@
 local M = {}
 local CURRENT_BUFFER = 0 -- current buffer
 local DB = require("query-stash.db")
+local STATUS_LINE = require("query-stash.status-line")
 
 local function setup(parameters)
     PATH_TO_EXECUTABLE = parameters["path_to_executable"]
+    CONNECTION_NAMES = parameters["connection_names"]
+    STATUS_LINE.set_status_line(CONNECTION_NAMES[1])
 end
 
 local function get_visual_index_range()
