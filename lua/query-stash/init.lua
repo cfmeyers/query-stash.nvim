@@ -2,6 +2,7 @@ local M = {}
 local CURRENT_BUFFER = 0 -- current buffer
 local DB = require("query-stash.db")
 local STATUS_LINE = require("query-stash.status-line")
+local SQL_UTILS = require("query-stash.sql-utils")
 
 local function setup(parameters)
     PATH_TO_EXECUTABLE = parameters["path_to_executable"]
@@ -66,16 +67,24 @@ local function send_visual_selection_to_query_stash(connection_name)
     write_query_results_to_buffer(results, end_index)
 end
 
+-- local function test_harness()
+    -- local query = "select * from dbt_collin.raw_customers limit 1"
+    -- local sqlite_query = "SELECT * FROM queries LIMIT 10;"
+    -- results = DB.get_results_from_query(sqlite_query)
+    -- for k, v in pairs(results) do
+    --     write_query_results_to_buffer(lines(v.query_text), 99)
+    -- end
+-- end
+
 local function test_harness()
-    local query = "select * from dbt_collin.raw_customers limit 1"
-    local sqlite_query = "SELECT * FROM queries LIMIT 10;"
-    results = DB.get_results_from_query(sqlite_query)
-    for k, v in pairs(results) do
-        write_query_results_to_buffer(lines(v.query_text), 99)
-    end
+    -- result = SQL_UTILS.get_line_number_for_next_query()
+    -- require("notify")(tostring(result))
+    SQL_UTILS.jump_to_next_query()
 end
 
 M.test_harness = test_harness
 M.send_visual_selection_to_query_stash = send_visual_selection_to_query_stash
 M.setup = setup
+M.jump_to_next_query = SQL_UTILS.jump_to_next_query
+M.jump_to_previous_query = SQL_UTILS.jump_to_previous_query
 return M
