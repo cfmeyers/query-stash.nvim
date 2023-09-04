@@ -1,7 +1,8 @@
 SELECT
     *
-FROM dbt_collin.raw_customers
+FROM dbt_test_user.raw_customers
 LIMIT 8
+
 /*
 | id | first_name | last_name |
 | -- | ---------- | --------- |
@@ -11,7 +12,9 @@ LIMIT 8
 
 SELECT
     *
-FROM account
+FROM account a
+    INNER JOIN cheese_factory cf
+        ON a.id = cf.account_id
 LIMIT 8
 
 
@@ -25,7 +28,9 @@ LIMIT 8
 
 
 SELECT
-    *
+    one
+    , two
+    , three
 FROM account
 LIMIT 8
 

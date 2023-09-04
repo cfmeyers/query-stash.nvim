@@ -79,7 +79,9 @@ end
 local function test_harness()
     -- result = SQL_UTILS.get_line_number_for_next_query()
     -- require("notify")(tostring(result))
-    SQL_UTILS.jump_to_next_query()
+    -- SQL_UTILS.jump_to_next_query()
+    -- put(SQL_UTILS.get_all_queries_in_current_buffer())
+    SQL_UTILS.show_queries_with_telescope()
 end
 
 M.test_harness = test_harness
@@ -87,4 +89,5 @@ M.send_visual_selection_to_query_stash = send_visual_selection_to_query_stash
 M.setup = setup
 M.jump_to_next_query = SQL_UTILS.jump_to_next_query
 M.jump_to_previous_query = SQL_UTILS.jump_to_previous_query
+M.show_queries_with_telescope = SQL_UTILS.show_queries_with_telescope
 return M
