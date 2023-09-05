@@ -1,5 +1,5 @@
 SELECT
-    *
+    first
 FROM dbt_test_user.raw_customers
 LIMIT 8
 
@@ -11,7 +11,7 @@ LIMIT 8
 */
 
 SELECT
-    *
+    second
 FROM account a
     INNER JOIN cheese_factory cf
         ON a.id = cf.account_id
@@ -28,9 +28,9 @@ LIMIT 8
 
 
 SELECT
-    one
-    , two
-    , three
+    third
+    , bump
+    , bump
 FROM account
 LIMIT 8
 
@@ -45,7 +45,7 @@ LIMIT 8
 
 WITH target AS (
     SELECT
-        *
+        fourth
     FROM account
 )
 select

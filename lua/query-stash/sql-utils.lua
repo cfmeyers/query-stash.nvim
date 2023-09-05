@@ -133,8 +133,14 @@ local function get_all_queries_in_current_buffer()
 end
 
 
+-- local function transform_query_for_telescope_select_display(query)
+--     return string.gsub(query, "\n", " ")
+-- end
+
 local function transform_query_for_telescope_select_display(query)
-    return string.gsub(query, "\n", " ")
+    query = string.gsub(query, "\n", " ")
+    query = string.gsub(query, " +", " ")
+    return query
 end
 
 local function show_queries_with_telescope()
@@ -149,7 +155,7 @@ local function show_queries_with_telescope()
       entry_maker = function(entry)
         return {
           value = entry,
-          display = string.gsub(entry.query, "\n", " "),
+          display = transform_query_for_telescope_select_display(entry.query),
           ordinal = entry.query,
         }
       end
@@ -159,20 +165,22 @@ local function show_queries_with_telescope()
     sorter = require('telescope.sorters').get_generic_fuzzy_sorter(),
 
     attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = action_state.get_selected_entry()
-        local win = vim.api.nvim_get_current_win()
-        vim.api.nvim_win_set_cursor(win, {selection.value.start_line, 0})
-        vim.api.nvim_command('normal! zz')
-      end)
+      actions.select_default:replace(
+        function()
+            actions.close(prompt_bufnr)
+            local selection = action_state.get_selected_entry()
+            local win = vim.api.nvim_get_current_win()
+            vim.api.nvim_win_set_cursor(win, {selection.value.start_line, 0})
+            vim.api.nvim_command('normal! zz')
+        end
+      )
       return true
     end,
 
     previewer = previewers.new_buffer_previewer({
       define_preview = function(self, entry, status)
         -- Save the current cursor position
-        pcall(vim.cmd, 'normal! m"')
+        -- pcall(vim.cmd, 'normal! m"')
 
         -- Set the lines of the buffer
         vim.api.nvim_buf_set_lines(
@@ -186,7 +194,12 @@ local function show_queries_with_telescope()
         -- Set the filetype to SQL for syntax highlighting
         vim.api.nvim_buf_set_option(self.state.bufnr, 'filetype', 'sql')
       end
-    })
+    }),
+
+  sorting_strategy = "ascending",  -- display results top->bottom
+  layout_config = {
+    prompt_position = 'top',
+  },
 
   }):find()
 end
