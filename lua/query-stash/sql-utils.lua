@@ -204,6 +204,43 @@ local function show_queries_with_telescope()
   }):find()
 end
 
+function jump_to_next_cell()
+    vim.cmd([[normal! f|]]) -- find next pipe char
+
+    if vim.fn.col('.') == vim.fn.col('$') - 1 then  -- if on the last cell
+        vim.cmd([[normal! 0]]) -- Move to the beginning of the next line
+    end
+
+    vim.cmd([[normal! 2l]]) -- move to offset
+    vim.cmd([[normal! zszH]])
+end
+
+function jump_to_previous_cell()
+    vim.cmd([[normal! F|]]) -- Find the previous pipe character
+
+    if vim.fn.col('.') == 1 then -- if on first cell
+        vim.cmd([[normal! $]]) -- Move to the end of the line
+    end
+
+    vim.cmd([[normal! F|]]) -- Find the previous pipe character
+
+    vim.cmd([[normal! 2l]]) -- move to offset
+
+    vim.cmd([[normal! zszH]]) -- center dislay horizontally
+end
+
+function jump_to_last_cell()
+    vim.cmd([[normal! $F|]]) -- Find the previous pipe character
+    vim.cmd([[normal! 2l]]) -- move to offset
+    vim.cmd([[normal! zszH]]) -- center dislay horizontally
+end
+
+function jump_to_first_cell()
+    vim.cmd([[normal! ^2l]])
+end
+
+-- Map the function to a key for convenience
+vim.api.nvim_set_keymap('n', '<leader>k', ':lua jump_to_prev_cell()<CR>', {noremap = true, silent = true})
 
 
 M.get_line_number_for_next_query = get_line_number_for_next_query
@@ -211,4 +248,8 @@ M.jump_to_next_query = jump_to_next_query
 M.jump_to_previous_query = jump_to_previous_query
 M.get_all_queries_in_current_buffer = get_all_queries_in_current_buffer
 M.show_queries_with_telescope = show_queries_with_telescope
+M.jump_to_next_cell = jump_to_next_cell
+M.jump_to_previous_cell = jump_to_previous_cell
+M.jump_to_first_cell = jump_to_first_cell
+M.jump_to_last_cell = jump_to_last_cell
 return M

@@ -81,7 +81,9 @@ local function test_harness()
     -- require("notify")(tostring(result))
     -- SQL_UTILS.jump_to_next_query()
     -- put(SQL_UTILS.get_all_queries_in_current_buffer())
-    SQL_UTILS.show_queries_with_telescope()
+    -- SQL_UTILS.show_queries_with_telescope()
+    -- SQL_UTILS.jump_to_previous_cell()
+    SQL_UTILS.jump_to_last_cell()
 end
 
 M.test_harness = test_harness
@@ -90,4 +92,8 @@ M.setup = setup
 M.jump_to_next_query = SQL_UTILS.jump_to_next_query
 M.jump_to_previous_query = SQL_UTILS.jump_to_previous_query
 M.show_queries_with_telescope = SQL_UTILS.show_queries_with_telescope
+M.jump_to_next_cell = SQL_UTILS.jump_to_next_cell
+M.jump_to_previous_cell = SQL_UTILS.jump_to_previous_cell
+M.jump_to_last_cell = SQL_UTILS.jump_to_last_cell
+M.jump_to_first_cell = SQL_UTILS.jump_to_first_cell
 return M
