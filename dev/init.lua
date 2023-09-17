@@ -18,7 +18,9 @@ vim.api.nvim_set_keymap(
     "v", ",t",
     ":lua require('query-stash').send_visual_selection_to_query_stash()<cr>", {}
 )
-require("query-stash").test_harness()
+-- require("query-stash").test_harness()
+
+-- vim.api.nvim_set_keymap("n", ",,", ":lua require('query-stash').test_harness()<cr>.", {})
 
 --[[ test sql
 
@@ -32,5 +34,19 @@ LIMIT 8
 | 1  | Michael    | P.        |
 | -- | ---------- | --------- |
 */
---]]
 
+SELECT
+    *
+FROM account
+LIMIT 8
+
+
+/* ¿2023-08-16 16:25:54?
+| ----------- | ----------- |
+| flow_1111   | 2015-01-01  |
+| *********** | 2015-01-01  |
+| *********   | 2015-01-31  |
+| ----------- | ----------- |
+*/
+
+--]]
